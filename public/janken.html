@@ -5,12 +5,15 @@
     <title>じゃんけん</title>
 </head>
 <body>
-    <form action="/janken">
+    <form action="/janken" method="get">
         <input type="text" name="hand" required>
         <label for="hand">何を出す？</label>
-        <input type="submit" values="じゃんけん ポン">
         <input type="hidden" name="win" value="0">
         <input type="hidden" name="total" value="0">
+    <br>
+        <input type="checkbox" name="check1" id="1">
+        <label for="radio1">負けたら勝ち</label><br>
+        <input type="submit" value="じゃんけぽん">
     </form>
 </body>
 </html>
