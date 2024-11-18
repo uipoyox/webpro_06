@@ -6,9 +6,12 @@
 app5.js | プログラム本体
 public/jannken.html | じゃんけん開始画面
 public/wish.html | 祈願開始画面
+public/zeller.html | 入力画面
 janken.ejs | WEB表記内容
 wish.ejs | WEB表記内容
+zeller.ejs | WEB表記内容
 
+# wishについて
 ## 起動方法
 1. ターミナルにて```node app5.js```でプログラムを起動
 1. Webブラウザで
@@ -80,3 +83,46 @@ num >= 995 - fiveceiling
 星3 | 94.3%
 星4 | 5.1%
 星5 | 0.6%
+
+# zellerについて
+## 起動方法
+1. ターミナルにて```node app5.js```でプログラムを起動
+1. Webブラウザで
+localhost:8080/public/zeller.html
+にアクセスする
+1. 生年月日入力した後に送信する
+
+## フローチャート
+```mermaid
+flowchart TD;
+start["開始"]
+number{"入力された値が8桁か確認"}
+bun["年，月，日に分解．しかし，1月，2月の場合前年の13月，14月とする"]
+ylow["年の下2桁をストック"]
+cen["何世紀か計算"]
+s1["年の下2桁を4で割った商"]
+s3["月の処理"]
+s5["世紀の処理"]
+s6["合計を7で割った余りを計算"]
+last["負の値を補正して曜日のリストと対応させる"]
+end1["終了"]
+
+start --> number
+number -->|no| end1
+number -->|yes| bun
+bun --> ylow
+ylow --> cen
+cen --> s1
+s1 --> s3
+s3 --> s5
+s5 --> s6
+s6 --> last
+last --> end1
+```
+
+## 機能
+好きな年月日の曜日を調べることができる
+
+## 改善点
+1. 年月日が存在しなくても8桁であれば計算できてしまう
+1. 8桁出ない場合でも終了画面が同じで文言が不可解になってしまう
