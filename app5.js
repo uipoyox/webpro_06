@@ -87,7 +87,7 @@ app.get("/wish", (req, res) => {
 
   if( value==1 ){
     const num = Math.floor(Math.random() * 1000 + 1);
-    fiveceiling = fiveCounter > 73 ? (fiveCounter - 73) * 60 : 0;
+    fiveceiling = fiveCounter > 73 ? (fiveCounter - 73) * 60 : 0; //負の値になることを防ぐ
     if( fourCounter == 9 )four += 1,result = '星4' , fourCounter = 0 , fiveCounter += 1 , tentotal.push('星4');
       else if (num <= 943 - fiveceiling) {
         three += 1 , result = '星3' , fourCounter += 1 , fiveCounter += 1 , tentotal.push('星3');
@@ -111,7 +111,7 @@ app.get("/wish", (req, res) => {
         four += 1, result = '星4' , fourCounter += 0 , fiveCounter += 1 , tentotal.push('星4');
       }
 
-    console.log( fiveceiling );
+    console.log( fiveceiling );//デバッグ用
 
     }
     total += 10;
