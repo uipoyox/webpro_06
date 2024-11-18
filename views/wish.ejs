@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>祈願</title>
+</head>
+<body>
+    <h1>祈願の結果</h1>
+    <p>祈願排出: <%= tentotal %></p>
+    <p>現在までの抽選回数: <%= total %></p>
+    <p>天井まで: <%= 90 - fiveCounter %> </p>
+    <p>星3: <%= three %>回</p>
+    <p>星4: <%= four %>回</p>
+    <p>星5: <%= five %>回</p>
+    <hr>
+    <form action="/wish" method="get">
+        <input type="radio" name="radio" id="radio1" value="1" required>
+        <label for="radio1">単発</label><br>
+        <input type="radio" name="radio" id="radio2" value="2">
+        <label for="radio2">10連</label><br>
+        <input type="hidden" name="total" value="<%= total %>">
+        <input type="hidden" name="three" value="<%= three %>">
+        <input type="hidden" name="four" value="<%= four %>">
+        <input type="hidden" name="five" value="<%= five %>">
+        <input type="hidden" name="fourCounter" value="<%= fourCounter %>">
+        <input type="hidden" name="fiveCounter" value="<%= fiveCounter %>">
+        <input type="hidden" name="fiveceiling" value="<%= fiveceiling %>">
+        <input type="hidden" name="tentotal" value="<%= tentotal %>">
+        <input type="submit" value="もう一度">
+    </form>
+</body>
+</html>

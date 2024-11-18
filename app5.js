@@ -45,7 +45,7 @@ app.get("/janken", (req, res) => {
     else if( num==1 && hand=='パー' || num==2 && hand=='グー' || num==3 && hand=='チョキ' ) judgement = '勝ち',win += 1;
     else if( num==1 && hand=='チョキ' || num==2 && hand=='パー' || num==3 && hand=='グー' || hand=='なさけない' ) judgement = '負け';
   }
-  else if( req.query.check1 ){
+  else if( req.query.reqcheck1 ){
     if( num==1 && hand=='グー' || num==2 && hand=='チョキ' || num==3 && hand=='パー' ) judgement = '引き分け';
     else if( num==1 && hand=='パー' || num==2 && hand=='グー' || num==3 && hand=='チョキ' ) judgement = '負け';
     else if( num==1 && hand=='チョキ' || num==2 && hand=='パー' || num==3 && hand=='グー' || hand=='なさけない' ) judgement = '勝ち',win += 1;
@@ -62,3 +62,74 @@ app.get("/janken", (req, res) => {
 });
 
 app.listen(8080, () => console.log("Example app listening on port 8080!"));
+
+app.get("/wish", (req, res) => {
+  const value = req.query.radio;
+  const num = Math.floor(Math.random() * 1000 + 1);
+   
+  let total = Number( req.query.total );
+  let three = Number( req.query.three );
+  let four = Number( req.query.four );
+  let five = Number( req.query.five );
+  let fourCounter = Number(req.query.fourCounter);
+  let fiveCounter = Number(req.query.fiveCounter);
+  let fiveceiling = 0;
+  let tentotal =[];
+
+  if (isNaN(total)) total = 0;
+  if (isNaN(three)) three = 0;
+  if (isNaN(four)) four = 0;
+  if (isNaN(five)) five = 0;
+  if (isNaN(fourCounter)) fourCounter = 0;
+  if (isNaN(fiveCounter)) fiveCounter = 0;
+
+  let result = '';
+
+  if( value==1 ){
+    const num = Math.floor(Math.random() * 1000 + 1);
+    fiveceiling = fiveCounter > 73 ? (fiveCounter - 73) * 60 : 0;
+    if( fourCounter == 9 )four += 1,result = '星4' , fourCounter = 0 , fiveCounter += 1 , tentotal.push('星4');
+      else if (num <= 943 - fiveceiling) {
+        three += 1 , result = '星3' , fourCounter += 1 , fiveCounter += 1 , tentotal.push('星3');
+      } else if (num >= 995 - fiveceiling) {
+        five += 1, result = '星5' , fourCounter += 1 , fiveCounter = 0 , tentotal.push('星5');
+      } else {
+        four += 1, result = '星4' , fourCounter += 0 , fiveCounter += 1 , tentotal.push('星4');
+      }
+    total += 1;
+  }
+  else if( value==2 ){
+    for (let i = 0; i < 10; i++) {
+      const num = Math.floor(Math.random() * 1000 + 1);
+      fiveceiling = fiveCounter > 73 ? (fiveCounter - 73) * 60 : 0;
+      if( fourCounter == 9 )four += 1,result = '星4' , fourCounter = 0 , fiveCounter += 1 , tentotal.push('星4');
+      else if (num <= 943 - fiveceiling) {
+        three += 1 , result = '星3' , fourCounter += 1 , fiveCounter += 1 , tentotal.push('星3');
+      } else if (num >= 995 - fiveceiling) {
+        five += 1, result = '星5' , fourCounter += 1 , fiveCounter = 0 , tentotal.push('星5');
+      } else {
+        four += 1, result = '星4' , fourCounter += 0 , fiveCounter += 1 , tentotal.push('星4');
+      }
+
+    console.log( fiveceiling );
+
+    }
+    total += 10;
+  }
+
+  console.log( result , num , fourCounter , fiveCounter  );
+
+  const display = {
+    result: result,
+    total: total,
+    three: three,
+    four: four,
+    five: five,
+    fourCounter: fourCounter,
+    fiveCounter: fiveCounter,
+    fiveceiling: fiveceiling,
+    tentotal: tentotal,
+  }
+
+  res.render( 'wish', display );
+});
