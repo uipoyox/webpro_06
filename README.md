@@ -1,7 +1,5 @@
 # webpro_06
 
-## このプログラムについて
-
 ## ファイル一覧
 ファイル名 | 説明
 -|-
@@ -33,6 +31,42 @@ if -->|単発| one
 one --> end1
 if -->|10連| ten
 ten --> end1
+```
+#### 祈願内部のフローチャート
+```mermaid
+flowchart TD;
+wish["開始"]
+if1{"9回連続で星4が出てない"}
+yesfour["星4を排出"]
+if2{"乱数がある値＊1より低い"}
+low1["星3を排出"]
+if3{"乱数がある値＊2より高い"}
+high1["星5を排出"]
+last["星4を排出"]
+end1["終了"]
+
+wish --> if1
+if1 -->|yes| yesfour
+yesfour --> end1
+if1 -->|no| if2
+if2 -->|yes|low1
+low1 --> end1
+if2 -->|no| if3
+if3 -->|yes| high1
+high1 --> end1
+if3 -->|no| last
+last --> end1
+```
+*1 ある値は 943-fiveceiling である．fiveceilingは星5の確率上昇及び星3確率減少の処理に使用．
+```javascript
+num <= 943 - fiveceiling
+```
+```javascript
+fiveceiling = fiveCounter > 73 ? (fiveCounter - 73) * 60 : 0;
+```
+*2 ある値は 995-fiveceiling である．
+```javascript
+num >= 995 - fiveceiling
 ```
 
 ## 機能
