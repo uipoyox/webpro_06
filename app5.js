@@ -133,3 +133,55 @@ app.get("/wish", (req, res) => {
 
   res.render( 'wish', display );
 });
+
+app.get("/zeller", (req, res) => {
+  const value = req.query.number;
+
+  let Y = Number(value.substring(0, 4));
+  let M = Number(value.substring(4, 6));
+  let D = Number(value.substring(6, 8));
+
+  let result = "";
+
+  if (value && value.length == 8) {
+    let year = Number(value.substring(0, 4));
+    let month = Number(value.substring(4, 6));
+    let day = Number(value.substring(6, 8));
+
+    // 1月または2月の場合前年を使用し、月を13または14にする
+    if (month == 1 || month == 2) {
+      month += 12;
+      year -= 1;
+    }
+
+    // ツェラーの公式の計算
+    const yearlow = year % 100;
+    const C = Math.floor(year / 100);
+    const step1 = Math.floor(yearlow / 4);
+    const step2 = yearlow;
+    const step3 = Math.floor(13 * (month + 1) / 5);
+    const step4 = day;
+    const step5 = Math.floor(C / 4) - 2 * C;
+
+    // 合計を7で割った余りを計算 
+    const step6 = (step1 + step2 + step3 + step4 + step5) % 7;
+
+    const xday = (step6 + 7) % 7;
+
+    const weekdays = ['土', '日', '月', '火', '水', '木', '金'];
+    result = weekdays[xday];
+  } else {
+    result = "8桁の生年月日を入力してください。";
+  }
+
+  console.log(result);
+
+  const display = {
+    result: result,
+    Y: Y,
+    M: M,
+    D: D,
+  };
+
+  res.render('zeller', display);
+});

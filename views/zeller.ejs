@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title>祈願</title>
+</head>
+<body>
+    <h1>計算結果</h1>
+    <p> <%= Y %>年<%= M %>月<%= D %>日は <%= result %> 曜日です</p>
+    <hr>
+    <form action="/zeller" method="get">
+        他の年月日もいかが？<input type="number" name="number" id="number"><br>
+        <input type="submit" value="送信">
+    </form>
+</body>
+</html>
